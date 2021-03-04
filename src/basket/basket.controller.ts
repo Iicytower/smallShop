@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Inject, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post } from '@nestjs/common';
 import { ItemInShop, ItemToAdd } from 'src/interfaces';
 import { ShopService } from 'src/shop/shop.service';
 import { BasketService } from './basket.service';
@@ -43,5 +43,10 @@ export class BasketController {
     const result = this.basketService.deleteItem(index);
     if (!result) return { isSuccess: false };
     return { isSuccess: true };
+  }
+
+  @Get()
+  basketContent(){
+    return this.basketService.userBasket;
   }
 }
