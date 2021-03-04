@@ -1,17 +1,13 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { ShopService } from './shop.service';
-import { ItemInShop } from "../interfaces";
+import { ItemInShop } from '../interfaces';
 
 @Controller('shop')
 export class ShopController {
-  constructor(
-    @Inject(ShopService) private shopService: ShopService
-  ){}
+  constructor(@Inject(ShopService) private shopService: ShopService) {}
 
   @Get()
-  itemsList(): ItemInShop[]{
-
+  itemsList(): ItemInShop[] {
     return this.shopService.itemsList();
-
   }
 }
