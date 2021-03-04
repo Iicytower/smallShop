@@ -11,7 +11,7 @@ export class BasketController {
   ) {}
 
   @Post('/')
-  basket(@Body() item: ItemToAdd) {
+  basket(@Body() item: ItemToAdd): {isSuccess: boolean; index?: number;} {
     const { name, count } = item;
 
     if (typeof name !== 'string') return { isSuccess: false };
@@ -36,7 +36,7 @@ export class BasketController {
   }
 
   @Delete('/:index')
-  deleteItem(@Param('index') index: number) {
+  deleteItem(@Param('index') index: number): {isSuccess: boolean;} {
     if (this.basketService.userBasket.length < Number(index) + 1)
       return { isSuccess: false };
 
@@ -46,7 +46,7 @@ export class BasketController {
   }
 
   @Get()
-  basketContent(){
+  basketContent(): ItemToAdd[]{
     return this.basketService.userBasket;
   }
 }
