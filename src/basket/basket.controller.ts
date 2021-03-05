@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { ItemInShop, ItemToAdd } from 'src/interfaces';
 import { ShopService } from 'src/shop/shop.service';
 import { BasketService } from './basket.service';
@@ -11,7 +19,7 @@ export class BasketController {
   ) {}
 
   @Post('/')
-  basket(@Body() item: ItemToAdd): {isSuccess: boolean; index?: number;} {
+  basket(@Body() item: ItemToAdd): { isSuccess: boolean; index?: number } {
     const { name, count } = item;
 
     if (typeof name !== 'string') return { isSuccess: false };
@@ -36,7 +44,7 @@ export class BasketController {
   }
 
   @Delete('/:index')
-  deleteItem(@Param('index') index: number): {isSuccess: boolean;} {
+  deleteItem(@Param('index') index: number): { isSuccess: boolean } {
     if (this.basketService.userBasket.length < Number(index) + 1)
       return { isSuccess: false };
 
@@ -45,8 +53,16 @@ export class BasketController {
     return { isSuccess: true };
   }
 
-  @Get()
-  basketContent(): ItemToAdd[]{
+  @Get('/')
+  basketContent(): ItemToAdd[] {
     return this.basketService.userBasket;
+  }
+
+  @Get('/total-price')
+  getTotalPrice() {
+
+    const result: number = this.basketService.countTotalPrice();
+
+    return result;
   }
 }

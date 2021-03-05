@@ -24,4 +24,7 @@ export class ShopService {
 
     return itemsListInShop;
   }
+  itemPrice(name: string) {
+    return this.itemsList().find(el => el.name === name).priceNetto;
+  }
 }
